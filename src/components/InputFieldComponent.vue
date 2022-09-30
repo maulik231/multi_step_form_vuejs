@@ -4,9 +4,9 @@
   <div class="relative">
     <div class="form-control">
       <label class="label">
-        {{fieldData.label}}
+        <span class="font-semibold">{{fieldData.label}}</span>
         <input
-          class="input input-bordered m-2 w-full"
+          class="input input-bordered m-2 w-10/12"
           :id="fieldData.id"
           :type=fieldData.type
           v-model="fieldData.value"

@@ -1,8 +1,8 @@
 <template>
   <div class="multi-step-form container mx-auto px-4">
     <form class="p-10 w-9/12 mx-auto" @submit.prevent="">
-      <h1>User Details</h1>
       <div v-if="!submitted">
+        <h1 class="mb-5 font-semibold text-4xl">User Details</h1>
         <!-- form step indicator -->
         <div class="flex items-stretch gap-2">
           <div
@@ -24,33 +24,26 @@
                 :invalidMessage="invalids[field]"
                 :validate="validateField(field)"
               />
-              <!-- <div class="form-control">
-                <label class="label">
-                  {{fields[field].label}}
-                  {{fields[field].label}}
-                  <input
-                    class="input input-bordered m-2 w-full"
-                    type="text"
-                    v-model="fields[field].value"
-                  />
-                </label>
-              </div> -->
             </div>
           </div>
         </div>
         <footer class="flex flex-row-reverse gap-2 justify-start mt-5">
-          <button class="btn btn-primary bg-indigo-600 hover:bg-indigo-700" v-if="isLastStep" @click="submit"> Submit </button>
-          <button class="btn btn-primary bg-indigo-600 hover:bg-indigo-700" v-if="!isLastStep" @click="nextStep"> Next </button>
-          <button class="btn" v-if="!isFirstStep" @click.prevent="previousStep"> Previous </button>
+          <button class="btn btn-primary bg-indigo-600 hover:bg-indigo-700 submit-btn" v-if="isLastStep" @click="submit"> Submit </button>
+          <button class="btn btn-primary bg-indigo-600 hover:bg-indigo-700 next-btn" v-if="!isLastStep" @click="nextStep"> Next </button>
+          <button class="btn previous-btn" v-if="!isFirstStep" @click.prevent="previousStep"> Previous </button>
         </footer>
       </div>
-      <div v-else>
-        <h3 class="p-5 text-lg">
+      <div v-else class="rounded mx-auto bg-white  pb-4 text-left shadow-xl border transition-all  sm:w-full sm:max-w-sm  ">
+        <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
+          <h3 class="text-lg  font-bold antialiased leading-6 text-slate-900">User Detail</h3>
+        </div>
+        <h3 class="p-5 text-lg ">
           <p><b>Name : </b> <span>{{ fields.firstName.value }} {{ fields.lastName.value }}</span></p>
-          <p><b>Date Of Birth : </b> <span>{{ fields.dateOfBirth.value }}</span></p>
-          Hey {{fields.firstName.value}}, thanks for add details!
+          <p><b>Date Of Birth : </b> <span> {{ fields.dateOfBirth.value }} </span></p>
+          <p class="mt-3">Hey <b>{{fields.firstName.value}}</b>, thanks for add details!</p>
         </h3>
       </div>
+      
     </form>
 
     <!-- Confirmation Dialog -->
@@ -75,7 +68,7 @@
               </div>
             </div>
             <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-              <button @click="openConfirm=false" type="button" class="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm">Okay</button>
+              <button @click="openConfirm=false" type="button" class="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm confirm-btn">Okay</button>
               <button @click="openConfirm=false" type="button" class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Cancel</button>
             </div>
           </div>
@@ -187,7 +180,6 @@ export default {
     validateField(fieldKey) {
       this.invalids[fieldKey] = false;
       const field = this.fields[fieldKey];
-      
       field.validations?.forEach(validation => {
         if (!validation.test(field.value)) {
           this.invalids[fieldKey] = validation.message;

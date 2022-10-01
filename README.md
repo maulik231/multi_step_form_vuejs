@@ -15,6 +15,11 @@ npm run serve
 npm run build
 ```
 
+### Run your cypress tests
+```
+npx cypress open
+```
+
 ### Lints and fixes files
 ```
 npm run lint
